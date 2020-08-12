@@ -1,6 +1,6 @@
 <template>
   <div class="crow text-left">
-    <div v-if="validity" class="row">
+    <div v-if="check_valid_user" class="row">
       <div class="media d-flex">
         <img :src="profile.avatarUrl" class="align-self-start mr-3" alt />
         <div class="media-body">
@@ -28,7 +28,7 @@ import { mapGetters } from "vuex";
 export default {
   name: "ProfileBlock",
   computed: {
-    ...mapGetters(["validity", "profile"]),
+    ...mapGetters(["check_valid_user", "profile"]),
   },
 };
 </script>

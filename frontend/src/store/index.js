@@ -7,7 +7,11 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    is_valid: false,
+    rete_limit: {},
+    total_langs: {},
+    bar_series: [],
+
+    is_valid_user: false,
     profile: {},
     repos: [],
     total_repos: [],
@@ -15,8 +19,8 @@ export default new Vuex.Store({
   },
 
   getters: {
-    validity: state => {
-      return state.is_valid;
+    check_valid_user: state => {
+      return state.is_valid_user;
     },
     profile: state => {
       return state.profile;
@@ -26,18 +30,46 @@ export default new Vuex.Store({
     },
     rating_gauge: state => {
       return state.rating_gauge;
+    },
+
+    get_bar_series: state => {
+      return state.bar_series;
     }
   },
 
   mutations: {
     set_validity: (state, payload) => {
-      state.is_valid = payload;
+      state.is_valid_user = payload;
     },
     set_profile: (state, profile_obj) => {
       state.profile = profile_obj;
     },
     set_repos: (state, repo_array) => {
       state.repos = repo_array;
+    },
+    set_rate_limit: (state, rateLimit_obj) => {
+      state.rate_limit = rateLimit_obj;
+    },
+    clear_data: state => {
+      (state.total_langs = {}), (state.bar_series = []);
+    },
+    create_total_langs: state => {
+      for (let i = 0; i < state.repos.length; i++) {
+        // each repo.nodes
+        let each_repo_langs_array = state.repos[i].languages.nodes;
+        for (let v = 0; v < each_repo_langs_array.length; v++) {
+          if (each_repo_langs_array[v].name in state.total_langs) {
+            state.total_langs[each_repo_langs_array[v].name] += 1;
+          } else {
+            state.total_langs[each_repo_langs_array[v].name] = 1;
+          }
+        }
+      }
+    },
+    create_bar_series: state => {
+      Object.keys(state.total_langs).forEach(key => {
+        state.bar_series.push({ name: key, data: [state.total_langs[key]] });
+      });
     }
   },
 
@@ -46,6 +78,11 @@ export default new Vuex.Store({
       // axios call to git api
       const response = await graphqlWithAuth(
         `query($user:String!) { 
+          rateLimit {
+            limit,
+            remaining,
+            resetAt
+          },
           user(login:$user){
             avatarUrl,
             name,
@@ -95,18 +132,16 @@ export default new Vuex.Store({
       );
       if (response.user) {
         commit("set_validity", true);
+        commit("set_rate_limit", response.rateLimit);
+
         commit("set_profile", response.user);
         commit("set_repos", response.user.repositories.nodes);
+
+        commit("create_total_langs");
+        commit("create_bar_series");
       } else {
         commit("set_validity", false);
       }
-      // if (response)
-      // commit mutation to state states
-    },
-    create_dognut: () => {
-      // get languages.nodes.name for all
-      // create an object with name : used
-      // create series
     }
   },
 

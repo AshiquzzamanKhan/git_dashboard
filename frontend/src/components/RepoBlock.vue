@@ -1,36 +1,40 @@
 <template>
-  <div class="row">
+  <div class="row" v-if="check_valid_user">
     <h6>Most Recent Repos</h6>
     <div class="accordion" id="accordionExample" v-for="repo in repos" :key="repo.createdAt">
       <div class="card">
         <div class="card-header" id="headingOne">
           <h2 class="mb-0">
             <button
-              class="btn btn-link btn-block text-left"
+              class="btn btn-link link-secondary btn-block text-left text-truncate"
               type="button"
               data-toggle="collapse"
-              data-target="#collapseOne"
-              aria-expanded="true"
-              aria-controls="collapseOne"
+              :aria-controls="repo.name"
             >{{repo.name}}</button>
           </h2>
         </div>
 
         <div
-          id="collapseOne"
+          id="repo.name"
           class="collapse show"
           aria-labelledby="headingOne"
           data-parent="#accordionExample"
         >
           <div class="card-body">
-            <span
-              v-for="(language, index) in repo.languages.nodes"
-              :key="index"
-              class="d-inline-flex p-1"
-            >{{language.name}}</span>
+            <div v-if="repo.languages.nodes.length > 0">
+              <span class="lead">Language used:</span>
+              <span
+                v-for="(language, index) in repo.languages.nodes"
+                :key="index"
+                class="badge bg-secondary p-1 m-1"
+              >{{language.name}}</span>
+            </div>
 
-            <hr v-if="repo.description" />
-            {{repo.description}}
+            <div v-if="repo.description">
+              <hr />
+              <span>Description:</span>
+              {{repo.description}}
+            </div>
           </div>
         </div>
       </div>
@@ -43,7 +47,7 @@ import { mapGetters } from "vuex";
 export default {
   name: "RepoBlock",
   computed: {
-    ...mapGetters(["validity", "repos"]),
+    ...mapGetters(["check_valid_user", "repos"]),
   },
 };
 </script>

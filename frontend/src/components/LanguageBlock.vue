@@ -1,39 +1,18 @@
 <template>
   <div class="card">
-    <div class="card-header">Language Expertise</div>
+    <div class="card-header">Language competency based on public repos</div>
     <div class="card-body">
-      <apexchart type="bar" height="130" :options="chartOptions" :series="series"></apexchart>
+      <apexchart type="bar" height="130" :options="chartOptions" :series="get_bar_series"></apexchart>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "LanguageBlock",
   data() {
     return {
-      series: [
-        {
-          name: "Python",
-          data: [44],
-        },
-        {
-          name: "JavaScript",
-          data: [53],
-        },
-        {
-          name: "HTML5",
-          data: [12],
-        },
-        {
-          name: "CSS3",
-          data: [9],
-        },
-        {
-          name: "GraphQL",
-          data: [25],
-        },
-      ],
       chartOptions: {
         chart: {
           stacked: true,
@@ -50,7 +29,7 @@ export default {
           lineCap: "round",
         },
         xaxis: {
-          categories: ["Top"],
+          categories: ["100 %"],
           labels: {
             show: false,
           },
@@ -58,7 +37,7 @@ export default {
         tooltip: {
           y: {
             formatter: function (val) {
-              return val + "K";
+              return val + "% used";
             },
           },
         },
@@ -71,6 +50,9 @@ export default {
         },
       },
     };
+  },
+  computed: {
+    ...mapGetters(["get_bar_series"]),
   },
 };
 </script>

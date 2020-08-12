@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import ProfileBlock from "./ProfileBlock";
 import RepoBlock from "./RepoBlock";
 
@@ -15,9 +14,6 @@ export default {
   components: {
     ProfileBlock,
     RepoBlock,
-  },
-  computed: {
-    ...mapGetters(["validity", "profile"]),
   },
 };
 </script>

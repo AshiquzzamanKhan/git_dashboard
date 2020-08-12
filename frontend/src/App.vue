@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container">
     <div class="row text-center p-2 mt-3">
-      <h4>Get an Overall Valuation of a git user</h4>
+      <h4>Get an abstract evaluation of a git user</h4>
       <Search />
       <hr />
     </div>

@@ -78,7 +78,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["profile"]),
+    ...mapGetters(["validity", "profile"]),
   },
 };
 </script>
