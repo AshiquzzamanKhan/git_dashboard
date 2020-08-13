@@ -1,21 +1,39 @@
 <template>
-  <div class="crow text-left">
+  <div class="text-left">
     <div v-if="check_valid_user" class="row">
       <div class="media d-flex">
         <img :src="profile.avatarUrl" class="align-self-start mr-3" alt />
         <div class="media-body">
-          <h5 class="mt-0">{{profile.name}}</h5>
+          <h5 class="mt-0">{{ profile.name }}</h5>
           <span class="blockquote-footer">
             Since
-            <cite title="Source Title">{{profile.createdAt | dateFormater}}</cite>
+            <cite title="Source Title">{{
+              profile.createdAt | dateFormater
+            }}</cite>
           </span>
-          <small>{{profile.location}}</small>
-          <p v-if="profile.bio">{{profile.bio}}</p>
-          <p v-if="profile.company">Working at - {{profile.company}}</p>
+          <small>{{ profile.location }}</small>
+          <p v-if="profile.bio">{{ profile.bio }}</p>
+          <p v-if="profile.company">Working at - {{ profile.company }}</p>
         </div>
       </div>
-      <p class="lead">Followers : {{profile.followers.totalCount}}</p>
-      <a class="btn btn-info btn-lg" :href="profile.url" role="button">Go to Profile</a>
+
+      <p class="lead">
+        <svg
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="d-flex-inline mr-1"
+        >
+          <use xlink:href="../assets/feather-sprite.svg#hash" /></svg
+        >Followers : {{ profile.followers.totalCount }}
+      </p>
+      <a class="btn btn-info btn-lg" :href="profile.url" role="button"
+        >Go to Profile</a
+      >
     </div>
     <div class="row" v-else>
       <h1 class="display-4">No Data to show</h1>
@@ -28,8 +46,8 @@ import { mapGetters } from "vuex";
 export default {
   name: "ProfileBlock",
   computed: {
-    ...mapGetters(["check_valid_user", "profile"]),
-  },
+    ...mapGetters(["check_valid_user", "profile"])
+  }
 };
 </script>
 

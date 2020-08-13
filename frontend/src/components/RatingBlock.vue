@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" v-if="check_valid_user">
     <div class="card-header">Overall Rating</div>
     <div class="card-body">
       <div class="row">
@@ -78,7 +78,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["validity", "profile"]),
+    ...mapGetters(["check_valid_user", "profile"]),
   },
 };
 </script>
