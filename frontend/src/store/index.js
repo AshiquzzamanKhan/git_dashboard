@@ -7,15 +7,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    rete_limit: {},
-    total_langs: {},
-    bar_series: [],
-
     is_valid_user: false,
     profile: {},
     repos: [],
-    total_repos: [],
-    curr_rating_gauge_param: null
+
+    rete_limit: {},
+
+    total_langs: {},
+    bar_series: [],
+    total_repos: []
   },
 
   getters: {

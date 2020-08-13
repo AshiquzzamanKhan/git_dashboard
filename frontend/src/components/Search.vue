@@ -25,7 +25,6 @@
         aria-label="Sizing example input"
         aria-describedby="inputGroup-sizing-default"
         placeholder="Enter git user profile name here"
-        @blur="username"
         @keypress.enter="doSearch"
       />
       <button class="input-group-text" @click="doSearch">Search</button>
@@ -39,14 +38,6 @@ import * as types from "../store/types";
 export default {
   name: "Search",
   methods: {
-    username() {
-      if (!event.target.value) return;
-      // input validation
-      else {
-        this.$store.commit("clear_data");
-        this.$store.dispatch("fetch_user", event.target.value);
-      } // dispacth aync actions to fetch user
-    },
     doSearch() {
       if (!event.target.value) return;
       // input validation
