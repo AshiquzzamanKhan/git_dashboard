@@ -7,18 +7,20 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    search_provided: false,
     is_valid_user: false,
     profile: {},
     repos: [],
-
-    rete_limit: {},
+    rate_limit_exceeds: false,
 
     total_langs: {},
-    bar_series: [],
-    total_repos: []
+    bar_series: []
   },
 
   getters: {
+    search_provided: state => {
+      return state.search_provided;
+    },
     check_valid_user: state => {
       return state.is_valid_user;
     },
@@ -28,16 +30,18 @@ export default new Vuex.Store({
     repos: state => {
       return state.repos.slice(0, 3);
     },
-    rating_gauge: state => {
-      return state.rating_gauge;
-    },
-
     get_bar_series: state => {
       return state.bar_series;
+    },
+    get_rate_remaining: state => {
+      return state.rate_limit_exceeds;
     }
   },
 
   mutations: {
+    set_search: (state, boolData) => {
+      state.search_provided = boolData;
+    },
     set_validity: (state, payload) => {
       state.is_valid_user = payload;
     },
@@ -47,11 +51,15 @@ export default new Vuex.Store({
     set_repos: (state, repo_array) => {
       state.repos = repo_array;
     },
-    set_rate_limit: (state, rateLimit_obj) => {
-      state.rate_limit = rateLimit_obj;
+    set_rate_limit: (state, rateLimit_remaining) => {
+      if (rateLimit_remaining < 10) {
+        state.rate_limit_exceeds = true;
+      } else state.rate_limit_exceeds = false;
     },
     clear_data: state => {
-      (state.total_langs = {}), (state.bar_series = []);
+      (state.total_langs = {}),
+        (state.bar_series = []),
+        (state.search_provided = false);
     },
     create_total_langs: state => {
       for (let i = 0; i < state.repos.length; i++) {
@@ -74,7 +82,8 @@ export default new Vuex.Store({
   },
 
   actions: {
-    fetch_user: async ({ commit }, username) => {
+    fetch_user: async ({ commit, state }, username) => {
+      commit("set_search", true); // search input provided by user
       // axios call to git api
       const response = await graphqlWithAuth(
         `query($user:String!) { 
@@ -130,17 +139,21 @@ export default new Vuex.Store({
           user: `${username}`
         }
       );
-      if (response.user) {
-        commit("set_validity", true);
-        commit("set_rate_limit", response.rateLimit);
 
-        commit("set_profile", response.user);
-        commit("set_repos", response.user.repositories.nodes);
+      commit("set_rate_limit", response.rateLimit.remaining); // check if api call limit exceeds
 
-        commit("create_total_langs");
-        commit("create_bar_series");
-      } else {
-        commit("set_validity", false);
+      if (!state.rate_limit_exceeds) {
+        if (response.user) {
+          commit("set_validity", true);
+          if (state.is_valid_user) {
+            commit("set_profile", response.user);
+            commit("set_repos", response.user.repositories.nodes);
+            commit("create_total_langs");
+            commit("create_bar_series");
+          }
+        } else {
+          commit("set_validity", false);
+        }
       }
     }
   },

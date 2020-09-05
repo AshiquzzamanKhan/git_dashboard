@@ -21,12 +21,14 @@ export default {
         plotOptions: {
           bar: {
             horizontal: true,
+            // startingShape: "rounded",
+            // endingShape: "rounded",
           },
         },
         stroke: {
           width: 1,
           colors: ["#fff"],
-          lineCap: "round",
+          // lineCap: "round",
         },
         xaxis: {
           categories: ["100 %"],

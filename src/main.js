@@ -9,8 +9,25 @@ Vue.use(VueApexCharts);
 Vue.component("apexchart", VueApexCharts);
 
 Vue.filter("dateFormater", val => {
-  const event = new Date(val);
-  return event.toDateString();
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ];
+  const datetime = new Date(val);
+  let formatted_date = `${
+    months[datetime.getMonth()]
+  } ${datetime.getDate()}, ${datetime.getFullYear()}`;
+  return formatted_date;
 });
 
 new Vue({

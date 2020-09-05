@@ -33,8 +33,6 @@
 </template>
 
 <script>
-import * as types from "../store/types";
-
 export default {
   name: "Search",
   methods: {
@@ -45,8 +43,8 @@ export default {
         this.$store.commit("clear_data");
         this.$store.dispatch("fetch_user", event.target.value);
       } // dispacth aync actions to fetch user
-    }
-  }
+    },
+  },
 };
 </script>
 
