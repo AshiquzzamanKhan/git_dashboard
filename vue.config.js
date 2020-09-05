@@ -7,5 +7,8 @@ module.exports = {
       filename: 'index.html',
       title: 'Git User Lookup'
     }
-  }
+  },
+  transpileDependencies: [
+    'vuetify'
+  ]
 }

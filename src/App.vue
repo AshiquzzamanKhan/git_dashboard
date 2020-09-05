@@ -1,31 +1,72 @@
 <template>
-  <div id="app" class="container">
-    <div class="row text-center p-2 mt-3">
-      <h4>Get an abstract evaluation of a git user</h4>
-      <Search />
-      <hr />
-    </div>
-    <div class="row p-2">
-      <Dashboard />
-      <Description />
-    </div>
+  <v-app>
+    <v-app-bar app color="primary" dark>
+      <div class="d-flex align-center">
+        <v-img
+          alt="Vuetify Logo"
+          class="shrink mr-2"
+          contain
+          src="./assets/github.svg"
+          transition="scale-transition"
+          width="40"
+        />Git User Lookup
+      </div>
+      <v-spacer></v-spacer>
+      <v-btn icon @click="changeTheme">
+        <v-icon>mdi-theme-light-dark</v-icon>
+      </v-btn>
+    </v-app-bar>
 
-    <footer class="fixed-bottom text-center">End credits</footer>
-  </div>
+    <v-main>
+      <v-container fluid>
+        <v-row>
+          <Search @is_valid="GET_IS_VALID" />
+        </v-row>
+        <v-row>
+          <v-col cols="8">
+            <RatingBlock></RatingBlock>
+            <LanguageBlock></LanguageBlock>
+          </v-col>
+          <v-col cols="4">
+            <ProfileBlock></ProfileBlock>
+            <RepoBlock></RepoBlock>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
+
 <script>
-import Search from "./components/Search";
-import Dashboard from "./components/Dashboard";
-import Description from "./components/Description";
+import Search from "@/components/Search";
+import RatingBlock from "@/components/RatingBlock";
+import LanguageBlock from "@/components/LanguageBlock";
+import ProfileBlock from "@/components/ProfileBlock";
+import RepoBlock from "@/components/RepoBlock";
+import { mapGetters } from "vuex";
+import * as types from "./store/types";
+
 export default {
   name: "App",
+
   components: {
     Search,
-    Dashboard,
-    Description,
+    RatingBlock,
+    LanguageBlock,
+    ProfileBlock,
+    RepoBlock,
   },
-  mounted() {},
+
+  data: () => ({
+    //
+  }),
+  methods: {
+    changeTheme() {
+      // change the theme
+    },
+  },
+  computed: {
+    ...mapGetters([types.GET_IS_VALID]),
+  },
 };
 </script>
-<style>
-</style>

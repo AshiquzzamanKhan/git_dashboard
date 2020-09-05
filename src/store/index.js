@@ -7,22 +7,23 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    search_provided: false,
-    is_valid_user: false,
+    [types.IS_VALID]: false,
+    [types.RATE_LIMIT]: 0,
+
     profile: {},
     repos: [],
-    rate_limit_exceeds: false,
 
     total_langs: {},
-    bar_series: []
+    bar_series: [],
   },
 
   getters: {
+    [types.GET_IS_VALID]: state => {
+      return state.types.IS_VALID;
+    },
+
     search_provided: state => {
       return state.search_provided;
-    },
-    check_valid_user: state => {
-      return state.is_valid_user;
     },
     profile: state => {
       return state.profile;
@@ -35,10 +36,21 @@ export default new Vuex.Store({
     },
     get_rate_remaining: state => {
       return state.rate_limit_exceeds;
-    }
+    },
   },
 
   mutations: {
+    [types.SET_IS_VALID]: (state, status) => {
+      state.types.IS_VALID = status;
+    },
+    [types.SET_RATE_LIMIT]: (state, status) => {
+      state.types.RATE_LIMIT = status;
+    },
+    [types.CLEAR_ALL_DATA]: state => {
+      state.types.IS_VALID = false;
+      state.types.RATE_LIMIT = 0;
+    },
+
     set_search: (state, boolData) => {
       state.search_provided = boolData;
     },
@@ -64,7 +76,7 @@ export default new Vuex.Store({
     create_total_langs: state => {
       for (let i = 0; i < state.repos.length; i++) {
         // each repo.nodes
-        let each_repo_langs_array = state.repos[i].languages.nodes;
+        const each_repo_langs_array = state.repos[i].languages.nodes;
         for (let v = 0; v < each_repo_langs_array.length; v++) {
           if (each_repo_langs_array[v].name in state.total_langs) {
             state.total_langs[each_repo_langs_array[v].name] += 1;
@@ -78,12 +90,12 @@ export default new Vuex.Store({
       Object.keys(state.total_langs).forEach(key => {
         state.bar_series.push({ name: key, data: [state.total_langs[key]] });
       });
-    }
+    },
   },
 
   actions: {
+    // fetch the user
     fetch_user: async ({ commit, state }, username) => {
-      commit("set_search", true); // search input provided by user
       // axios call to git api
       const response = await graphqlWithAuth(
         `query($user:String!) { 
@@ -136,7 +148,7 @@ export default new Vuex.Store({
           }
         }`,
         {
-          user: `${username}`
+          user: `${username}`,
         }
       );
 
@@ -155,8 +167,8 @@ export default new Vuex.Store({
           commit("set_validity", false);
         }
       }
-    }
+    },
   },
 
-  modules: {}
+  modules: {},
 });

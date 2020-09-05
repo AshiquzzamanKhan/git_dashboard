@@ -10,18 +10,18 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import ProfileBlock from "./ProfileBlock";
-import RepoBlock from "./RepoBlock";
+import { mapGetters } from 'vuex'
+import ProfileBlock from './ProfileBlock'
+import RepoBlock from './RepoBlock'
 
 export default {
-  name: "Description",
+  name: 'Description',
   components: {
     ProfileBlock,
-    RepoBlock,
+    RepoBlock
   },
   computed: {
-    ...mapGetters(["search_provided", "check_valid_user", "profile"]),
-  },
-};
+    ...mapGetters(['search_provided', 'check_valid_user', 'profile'])
+  }
+}
 </script>

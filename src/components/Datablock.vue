@@ -8,7 +8,7 @@
           <a :href="repo.url" class="list-group-item list-group-item-action" v-for="(repo, index) in repos" :key="index">
             {{repo.name}}
             {{repo.createdAt | dateFormater}}
-            
+
             {{repo.languages.nodes}}
           </a>
         </div>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Datablock',
@@ -28,8 +28,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["repos"])
-  },
+    ...mapGetters(['repos'])
+  }
 }
 </script>
 

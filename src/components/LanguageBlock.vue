@@ -1,10 +1,15 @@
 <template>
-  <div class="card">
-    <div class="card-header">Language competency based on public repos</div>
-    <div class="card-body">
-      <apexchart type="bar" height="130" :options="chartOptions" :series="get_bar_series"></apexchart>
-    </div>
-  </div>
+  <v-container>
+    <v-card>
+      <v-card-title class="grey lighten-3">Overall Languages Usage</v-card-title>
+
+      <v-list-item>
+        <v-list-item-content>
+          <apexchart type="bar" height="130" :options="chartOptions" :series="get_bar_series"></apexchart>
+        </v-list-item-content>
+      </v-list-item>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
@@ -59,5 +64,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
