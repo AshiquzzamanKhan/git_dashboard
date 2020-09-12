@@ -2,10 +2,14 @@
   <v-container>
     <v-card>
       <v-card-title class="grey lighten-3">Overall Languages Usage</v-card-title>
-
-      <v-list-item>
+      <v-list-item v-if="is_valid">
         <v-list-item-content>
           <apexchart type="bar" height="130" :options="chartOptions" :series="get_bar_series"></apexchart>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item class="text-center" v-else>
+        <v-list-item-content>
+          <div class="headline mb-4">...</div>
         </v-list-item-content>
       </v-list-item>
     </v-card>
@@ -16,6 +20,7 @@
 import { mapGetters } from "vuex";
 export default {
   name: "LanguageBlock",
+  props: ["is_valid"],
   data() {
     return {
       chartOptions: {
@@ -58,9 +63,7 @@ export default {
       },
     };
   },
-  computed: {
-    ...mapGetters(["get_bar_series"]),
-  },
+  computed: {},
 };
 </script>
 

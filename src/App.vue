@@ -20,16 +20,16 @@
     <v-main>
       <v-container fluid>
         <v-row>
-          <Search @is_valid="GET_IS_VALID" />
+          <Search />
         </v-row>
         <v-row>
           <v-col cols="8">
-            <RatingBlock></RatingBlock>
-            <LanguageBlock></LanguageBlock>
+            <RatingBlock @is_valid="get_is_valid"></RatingBlock>
+            <LanguageBlock @is_valid="get_is_valid"></LanguageBlock>
           </v-col>
           <v-col cols="4">
-            <ProfileBlock></ProfileBlock>
-            <RepoBlock></RepoBlock>
+            <ProfileBlock @is_valid="get_is_valid"></ProfileBlock>
+            <RepoBlock @is_valid="get_is_valid"></RepoBlock>
           </v-col>
         </v-row>
       </v-container>
@@ -66,7 +66,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters([types.GET_IS_VALID]),
+    ...mapGetters([[types.GET_IS_VALID]]),
   },
 };
 </script>

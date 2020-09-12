@@ -10,7 +10,7 @@
       <span text-secondary slot="prepend-inner" class="pt-1 text-block">
         <v-icon>mdi-github</v-icon>https://github.com/
       </span>
-      <v-btn slot="append" icon @click="doSearch">
+      <v-btn slot="append" icon @click="doSearch" :loading="get_is_loading">
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
     </v-text-field>
@@ -18,6 +18,9 @@
 </template>
 
 <script>
+import * as types from "../store/types";
+import { mapGetters } from "vuex";
+
 export default {
   name: "Search",
   methods: {
@@ -25,10 +28,17 @@ export default {
       if (!event.target.value) return;
       // input validation
       else {
-        this.$store.commit("clear_data");
-        this.$store.dispatch("fetch_user", event.target.value);
+        // set loading to true
+        this.$store.commit("types.SET_IS_LOADING", true);
+        // clear all previous data
+        // call octokit to fetch user
+        // this.$store.commit("clear_data");
+        // this.$store.dispatch("fetch_user", event.target.value);
       } // dispacth aync actions to fetch user
     },
+  },
+  computed: {
+    ...mapGetters([[types.GET_IS_LOADING]]),
   },
 };
 </script>

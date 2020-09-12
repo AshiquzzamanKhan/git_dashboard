@@ -9,6 +9,7 @@ export default new Vuex.Store({
   state: {
     [types.IS_VALID]: false,
     [types.RATE_LIMIT]: 0,
+    [types.IS_LOADING]: false,
 
     profile: {},
     repos: [],
@@ -19,7 +20,10 @@ export default new Vuex.Store({
 
   getters: {
     [types.GET_IS_VALID]: state => {
-      return state.types.IS_VALID;
+      return state[types.IS_VALID];
+    },
+    [types.GET_IS_LOADING]: state => {
+      return state[types.IS_LOADING];
     },
 
     search_provided: state => {
@@ -34,18 +38,19 @@ export default new Vuex.Store({
     get_bar_series: state => {
       return state.bar_series;
     },
-    get_rate_remaining: state => {
-      return state.rate_limit_exceeds;
-    },
   },
 
   mutations: {
     [types.SET_IS_VALID]: (state, status) => {
-      state.types.IS_VALID = status;
+      state[types.IS_VALID] = status;
     },
     [types.SET_RATE_LIMIT]: (state, status) => {
-      state.types.RATE_LIMIT = status;
+      state[types.RATE_LIMIT] = status;
     },
+    [types.SET_IS_LOADING]: (state, status) => {
+      state[types.IS_LOADING] = status;
+    },
+
     [types.CLEAR_ALL_DATA]: state => {
       state.types.IS_VALID = false;
       state.types.RATE_LIMIT = 0;
@@ -151,9 +156,10 @@ export default new Vuex.Store({
           user: `${username}`,
         }
       );
-
+      // set rate limit
       commit("set_rate_limit", response.rateLimit.remaining); // check if api call limit exceeds
-
+      // set profile user
+      // set loading off
       if (!state.rate_limit_exceeds) {
         if (response.user) {
           commit("set_validity", true);
