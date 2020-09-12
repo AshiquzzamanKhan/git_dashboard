@@ -21,4 +21,3 @@ jobs:
           app_name: "git-lookup"
           branch: "master"
           subfolder: "dist"
-          healthcheck: "https://git-lookup.herokuapp.com/health"
