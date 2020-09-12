@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        run: |
+          git config --global user.email "primeintegerslab@gmail.com"
+          git config --global user.name "PandorAstrum"
       - uses: akhileshns/heroku-deploy@v3.4.6
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
@@ -20,4 +23,3 @@ jobs:
           buildpack: "https://github.com/mfine/heroku-buildpack-stack.git"
           dontuseforce: false
           usedocker: false
-          appdir: ""
