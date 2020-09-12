@@ -17,3 +17,7 @@ jobs:
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
           procfile: "web: npm start"
+          buildpack: "https://github.com/mfine/heroku-buildpack-stack.git"
+          dontuseforce: false
+          usedocker: false
+          appdir: ""
