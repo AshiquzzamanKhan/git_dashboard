@@ -1,20 +1,19 @@
 name: build-and-deploy
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
 
+jobs:
   deploy:
     runs-on: ubuntu-latest
-    needs: test-unit
-    if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v2
-      # possibly setup node action here...
-      # possibly cache of node modules action here...
-      # build steps here...
-      - uses: onekiloparsec/heroku-node-deploy-subfolder@v1.0.4
+      - uses: akhileshns/heroku-deploy@v3.4.6
         with:
-          api_key: ${{secrets.HEROKU_API_KEY}}
-          email: ${{secrets.HEROKU_EMAIL}}
-          app_name: "git-lookup"
-          branch: "master"
-          subfolder: "dist"
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          heroku_app_name: "git-lookup"
+          procfile: "web: npm start"
