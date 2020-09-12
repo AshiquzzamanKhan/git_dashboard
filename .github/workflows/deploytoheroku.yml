@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: akhileshns/heroku-deploy@v3.4.6 # this is the action
         with:
-          heroku_api_key: ${{secrects.HEROKU_API_KEYS}}
+          heroku_api_key: ${{secrets.HEROKU_API_KEYS}}
           heroku_app_name: "git-lookup" # unique in heroku
           heroku_email: "primeintegerslab@gmail.com"
           buildpack: "https://github.com/heroku/heroku-buildpack-static.git"
