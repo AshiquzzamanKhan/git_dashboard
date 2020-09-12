@@ -1,4 +1,4 @@
-name: build-and-deploy
+name: Deploy to Heroku
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -15,5 +15,5 @@ jobs:
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_email: ${{secrets.HEROKU_EMAIL}}
-          heroku_app_name: "git-lookup"
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
           procfile: "web: npm start"
