@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
 
 jobs:
   build:
@@ -16,7 +17,7 @@ jobs:
           heroku_app_name: "git-lookup" # unique in heroku
           heroku_email: "primeintegerslab@gmail.com"
           buildpack: "https://github.com/heroku/heroku-buildpack-static.git"
-          procfile: "web: npm run serve"
+          procfile: "web: npm start"
           healthcheck: "https://git-lookup.herokuapp.com/health"
           checkstring: "ok"
           delay: 5
