@@ -3,22 +3,37 @@
     <v-card>
       <v-card-title class="grey lighten-3">Overall Rating</v-card-title>
       <v-list-item class="ml-5" v-if="is_valid">
-        <v-list-item-content>
-          <div class="overline mb-4">
-            <v-icon class="pr-2" color="primary">mdi-backup-restore</v-icon>Total Commits (2020):
+        <v-list-item-content class="ml-6">
+          <div class="subtitle-2 mb-2">
+            <v-icon class="pr-4" color="primary">mdi-backup-restore</v-icon
+            >Total Commits (2020):
+            {{
+              profile_obj.contributionsCollection.contributionCalendar
+                .totalContributions
+            }}
           </div>
-          <div class="overline mb-4">
-            <v-icon class="pr-2" color="primary">mdi-star-outline</v-icon>Total Stars:
+          <div class="subtitle-2 mb-2">
+            <v-icon class="pr-4" color="primary">mdi-star-outline</v-icon
+            >Starred: {{ profile_obj.starredRepositories.totalCount }}
           </div>
-          <div class="overline mb-4">
-            <v-icon class="pr-2" color="primary">mdi-information-outline</v-icon>Issues:
+          <div class="subtitle-2 mb-2">
+            <v-icon class="pr-4" color="primary">mdi-information-outline</v-icon
+            >Issues:{{ profile_obj.issues.totalCount }}
           </div>
-          <div class="overline mb-4">
-            <v-icon class="pr-2" color="primary">mdi-code-braces</v-icon>Contributions:
+          <div class="subtitle-2 mb-2">
+            <v-icon class="pr-4" color="primary">mdi-code-braces</v-icon>Pull
+            Requests:
+            {{ profile_obj.repositoriesContributedTo.totalCount }}
+          </div>
+          <div class="subtitle-2 mb-2">
+            <v-icon class="pr-4" color="primary">mdi-code-braces</v-icon
+            >Contributed to:
+            {{ profile_obj.repositoriesContributedTo.totalCount }}
           </div>
         </v-list-item-content>
         <apexchart
-          width="300"
+          class="mr-6"
+          width="240"
           type="radialBar"
           :options="rating_gauge_options"
           :series="rating_gauge_series"
@@ -34,22 +49,22 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex'
 
 export default {
-  name: "RatingBlock",
-  props: ["is_valid"],
-  data() {
+  name: 'RatingBlock',
+  props: ['is_valid', 'profile_obj'],
+  data () {
     return {
       rating_gauge_series: [67],
       rating_gauge_options: {
-        colors: ["#20E647"],
+        colors: ['#20E647'],
         plotOptions: {
           radialBar: {
             hollow: {
               margin: 0,
-              size: "60%",
-              background: "#293450",
+              size: '65%',
+              background: '#293450'
             },
             track: {
               dropShadow: {
@@ -57,38 +72,38 @@ export default {
                 top: 2,
                 left: 0,
                 blur: 4,
-                opacity: 0.15,
-              },
+                opacity: 0.15
+              }
             },
             dataLabels: {
               name: {
-                show: false,
+                show: false
               },
               value: {
-                color: "#fff",
-                fontSize: "30px",
-                show: true,
-              },
-            },
-          },
+                color: '#fff',
+                fontSize: '30px',
+                show: true
+              }
+            }
+          }
         },
         fill: {
-          type: "gradient",
+          type: 'gradient',
           gradient: {
-            shade: "dark",
-            type: "vertical",
-            gradientToColors: ["#87D4F9"],
-            stops: [0, 100],
-          },
+            shade: 'dark',
+            type: 'vertical',
+            gradientToColors: ['#87D4F9'],
+            stops: [0, 100]
+          }
         },
         stroke: {
-          lineCap: "round",
-        },
-      },
-    };
+          lineCap: 'round'
+        }
+      }
+    }
   },
-  computed: {},
-};
+  computed: {}
+}
 </script>
 
 <style lang="scss" scoped></style>

@@ -1,11 +1,12 @@
 <template>
   <v-container>
     <v-text-field
-      label="Enter git user profile name here"
+      label="Enter git profile name here"
       dense
       filled
       solo
       @keypress.enter="doSearch"
+      v-model="username"
     >
       <span text-secondary slot="prepend-inner" class="pt-1 text-block">
         <v-icon>mdi-github</v-icon>https://github.com/
@@ -18,27 +19,34 @@
 </template>
 
 <script>
-import * as types from "../store/types";
 import { mapGetters } from "vuex";
+import {
+  GET_IS_LOADING,
+  SET_IS_LOADING,
+  CLEAR_ALL_DATA,
+  ASYNC_FETCH_USER,
+} from "@/store/types";
 
 export default {
   name: "Search",
+  data() {
+    return {
+      username: "",
+    };
+  },
   methods: {
     doSearch() {
-      if (!event.target.value) return;
+      if (!this.username) return;
       // input validation
       else {
-        // set loading to true
-        this.$store.commit("types.SET_IS_LOADING", true);
-        // clear all previous data
-        // call octokit to fetch user
-        // this.$store.commit("clear_data");
-        // this.$store.dispatch("fetch_user", event.target.value);
-      } // dispacth aync actions to fetch user
+        this.$store.commit(SET_IS_LOADING, true); // set loading to true
+        this.$store.dispatch(CLEAR_ALL_DATA); // clear all previous data if exist
+        this.$store.dispatch(ASYNC_FETCH_USER, this.username); // call octokit to fetch user
+      }
     },
   },
   computed: {
-    ...mapGetters([[types.GET_IS_LOADING]]),
+    ...mapGetters([GET_IS_LOADING]),
   },
 };
 </script>
