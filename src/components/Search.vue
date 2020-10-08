@@ -1,14 +1,14 @@
 <template>
   <v-container>
     <v-text-field
-      label="Enter git profile name here"
+      label="Enter git user profile name here"
       dense
       filled
       solo
       @keypress.enter="doSearch"
       v-model="username"
     >
-      <span text-secondary slot="prepend-inner" class="pt-1 text-block">
+      <span slot="prepend-inner" class="pt-1 text-block">
         <v-icon>mdi-github</v-icon>https://github.com/
       </span>
       <v-btn slot="append" icon @click="doSearch" :loading="get_is_loading">
