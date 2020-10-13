@@ -1,13 +1,14 @@
-FROM node:alpine
-
+# Base image name
+FROM node:alpine        
+# exposing port to containers
 EXPOSE 8080
-
+# specify the directory
 WORKDIR '/app'
-
+# copying package.json file to app directory
 COPY package.json .
-
+# run this command 
 RUN npm install
-
+# copy everything from root dir to work dir of containers
 COPY . .
-
+# default command for this build
 CMD ["npm", "run", "start"]
