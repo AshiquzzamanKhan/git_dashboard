@@ -1,6 +1,8 @@
-version: "3"
+version: "3.8"
+
 services:
-  web:
+  frontend:
+    container_name: git_dashboard_container
     build:
       context: .
       dockerfile: Dockerfile.dev
@@ -11,3 +13,4 @@ services:
       - .:/app
     environment:
       - CHOKIDAR_USEPOLLING=true
+    
