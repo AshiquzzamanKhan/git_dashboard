@@ -2,6 +2,7 @@ version: "3.8"
 
 services:
   frontend:
+    restart: always
     container_name: git_dashboard_container
     build:
       context: .

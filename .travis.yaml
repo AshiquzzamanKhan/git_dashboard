@@ -1,0 +1,22 @@
+sudo: required
+services:
+  # require docker service
+  - docker
+
+before_install:
+  # build image using dockerfile
+  - docker build -t dreadlordn/git_dashboard:dev -f Dockerfile.dev .
+
+script:
+  # only run test suit on that image
+  - docker run --rm dreadlordn/git_dashboard:dev npm run test -- --coverage
+
+#after_success:
+# npm build
+# make prod images
+# push image on docker hub
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: $HEROKU_API_KEY
