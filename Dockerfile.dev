@@ -1,14 +1,12 @@
-# Base image name
+# Base image name alpine
 FROM node:alpine        
-# exposing port to containers
-EXPOSE 8080
-# specify the directory
+# specify the root directory
 WORKDIR '/app'
-# copying package.json file to app directory
+# copying package.json file to root directory
 COPY package.json .
-# run this command 
+# run npm install to install necessary dependencies from package.json
 RUN npm install
-# copy everything from root dir to work dir of containers
+# copy everything for docker cache layer
 COPY . .
-# default command for this build
+# default command for this Image
 CMD ["npm", "run", "start"]

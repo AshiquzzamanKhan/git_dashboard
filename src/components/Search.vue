@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-text-field
-      label="Enter git profile name here ..."
+      label="Git User ..."
       dense
       filled
       solo
