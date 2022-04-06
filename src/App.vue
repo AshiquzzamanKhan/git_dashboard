@@ -17,6 +17,7 @@
       </v-btn>
     </v-app-bar>
 
+    <!-- Something new -->
     <v-main>
       <v-container fluid>
         <v-row>
@@ -24,12 +25,21 @@
         </v-row>
         <v-row>
           <v-col cols="8">
-            <RatingBlock :is_valid="get_is_valid" :profile_obj="get_profile_obj"></RatingBlock>
+            <RatingBlock
+              :is_valid="get_is_valid"
+              :profile_obj="get_profile_obj"
+            ></RatingBlock>
             <LanguageBlock :is_valid="get_is_valid"></LanguageBlock>
           </v-col>
           <v-col cols="4">
-            <ProfileBlock :is_valid="get_is_valid" :profile_obj="get_profile_obj"></ProfileBlock>
-            <RepoBlock :is_valid="get_is_valid" :repo_arr="get_repos_array"></RepoBlock>
+            <ProfileBlock
+              :is_valid="get_is_valid"
+              :profile_obj="get_profile_obj"
+            ></ProfileBlock>
+            <RepoBlock
+              :is_valid="get_is_valid"
+              :repo_arr="get_repos_array"
+            ></RepoBlock>
           </v-col>
         </v-row>
       </v-container>
@@ -38,36 +48,36 @@
 </template>
 
 <script>
-import Search from '@/components/Search'
-import RatingBlock from '@/components/RatingBlock'
-import LanguageBlock from '@/components/LanguageBlock'
-import ProfileBlock from '@/components/ProfileBlock'
-import RepoBlock from '@/components/RepoBlock'
-import { mapGetters } from 'vuex'
-import { GET_IS_VALID, GET_PROFILE_OBJ, GET_REPOS_ARRAY } from '@/store/types'
+import Search from "@/components/Search";
+import RatingBlock from "@/components/RatingBlock";
+import LanguageBlock from "@/components/LanguageBlock";
+import ProfileBlock from "@/components/ProfileBlock";
+import RepoBlock from "@/components/RepoBlock";
+import { mapGetters } from "vuex";
+import { GET_IS_VALID, GET_PROFILE_OBJ, GET_REPOS_ARRAY } from "@/store/types";
 
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
     Search,
     RatingBlock,
     LanguageBlock,
     ProfileBlock,
-    RepoBlock
+    RepoBlock,
   },
 
   data: () => ({
     //
   }),
   methods: {
-    changeTheme () {
+    changeTheme() {
       // change the theme
-      this.$vuetify.theme.dark
-    }
+      this.$vuetify.theme.dark;
+    },
   },
   computed: {
-    ...mapGetters([GET_IS_VALID, GET_PROFILE_OBJ, GET_REPOS_ARRAY])
-  }
-}
+    ...mapGetters([GET_IS_VALID, GET_PROFILE_OBJ, GET_REPOS_ARRAY]),
+  },
+};
 </script>
